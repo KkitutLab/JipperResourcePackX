@@ -69,7 +69,7 @@ public static class Main {
                 ModMenu.ModMenuApi.Register(new ModMenu.ModEntry {
                     Id = "JipperResourcePackX",
                     DisplayName = "Jipper Resource Pack X",
-                    Version = "1.6.0",
+                    Version = "1.6.0.1",
                     Author = "Jongyeol, Kkitut",
                     Enabled = Enabled,
                     OnToggle = (val) => OnToggle(val),
