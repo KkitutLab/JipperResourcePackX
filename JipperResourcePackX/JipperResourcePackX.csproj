@@ -105,7 +105,7 @@
         </PropertyGroup>
 
         <ItemGroup>
-            <AssetFiles Include="$(MSBuildProjectDirectory)/Assets/**/*.*" />
+            <AssetFiles Include="$(MSBuildProjectDirectory)/Assets/**/*.*" Exclude="$(MSBuildProjectDirectory)/Assets/Info.json" />
         </ItemGroup>
 
         <MakeDir Directories="$(GamePath)/Mods" Condition="'$(TargetPath)' != '' and $(Configuration.Contains('ML'))" />
