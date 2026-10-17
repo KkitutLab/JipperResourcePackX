@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JipperResourcePackX", "JipperResourcePackX\JipperResourcePackX.csproj", "{F601ED78-FCBD-4553-96DF-823484985679}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_ML|Any CPU = Debug_ML|Any CPU
+		Release_ML|Any CPU = Release_ML|Any CPU
+		Debug_UMM|Any CPU = Debug_UMM|Any CPU
+		Release_UMM|Any CPU = Release_UMM|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F601ED78-FCBD-4553-96DF-823484985679}.Debug_ML|Any CPU.ActiveCfg = Debug_ML|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Debug_ML|Any CPU.Build.0 = Debug_ML|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Release_ML|Any CPU.ActiveCfg = Release_ML|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Release_ML|Any CPU.Build.0 = Release_ML|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Debug_UMM|Any CPU.ActiveCfg = Debug_UMM|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Debug_UMM|Any CPU.Build.0 = Debug_UMM|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Release_UMM|Any CPU.ActiveCfg = Release_UMM|Any CPU
+		{F601ED78-FCBD-4553-96DF-823484985679}.Release_UMM|Any CPU.Build.0 = Release_UMM|Any CPU
+	EndGlobalSection
+EndGlobal

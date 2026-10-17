@@ -1,0 +1,56 @@
+using System;
+using System.Threading;
+using JipperResourcePackX.Async;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace JipperResourcePackX.KeyViewerContents;
+
+public class Key {
+    public readonly GameObject GameObject;
+    private readonly Action _updateKey;
+    public AsyncText Text;
+    public Image Background;
+    public Image Outline;
+    public AsyncText Value;
+    public int Color;
+    public int SiblingIndex;
+    public RainPool RainPool;
+    public RawRain LastRain;
+    public RawRain LastGhostRain;
+    private int _updateRequested;
+    private bool _requestEnabled;
+    private bool _currentEnabled;
+
+    public Key(GameObject gameObject) {
+        GameObject = gameObject;
+        _updateKey = () => UpdateKey();
+    }
+
+    public void UpdateRequestKey(bool enabled) {
+        _requestEnabled = enabled;
+        if (MainThread.IsMainThread()) {
+            UpdateKey(true);
+            return;
+        }
+        if(Interlocked.Increment(ref _updateRequested) == 1) MainThread.Run(_updateKey);
+    }
+
+    public void UpdateKey(bool force = false) {
+        int current;
+        do {
+            current = Volatile.Read(ref _updateRequested);
+            if(current == 0 && !force) return;
+            bool request = _requestEnabled;
+            if(force || request != _currentEnabled) {
+                KeyViewerSetting settings = KeyViewer.Settings;
+                Background.color = request ? settings.BackgroundClicked : settings.Background;
+                Outline.color = request ? settings.OutlineClicked : settings.Outline;
+                Color color = request ? settings.TextClicked : settings.Text;
+                Text.TMP.color = color;
+                Value?.TMP.color = color;
+                _currentEnabled = request;
+            }
+        } while(Interlocked.CompareExchange(ref _updateRequested, 0, current) != current);
+    }
+}

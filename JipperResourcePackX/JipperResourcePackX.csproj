@@ -1,0 +1,132 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <RootNamespace>JipperResourcePackX</RootNamespace>
+        <AssemblyName>JipperResourcePackX</AssemblyName>
+        <Nullable>disable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Version>1.6.0</Version>
+        <Configurations>Debug_ML;Release_ML;Debug_UMM;Release_UMM</Configurations>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+        <Optimize>false</Optimize>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
+        <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+        <Optimize>true</Optimize>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>none</DebugType>
+        <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration.Contains('ML'))">
+        <DefineConstants>$(DefineConstants);ML</DefineConstants>
+        <ModMenuProject Condition="'$(ModMenuProject)' == ''">../../ModMenu/ModMenu/ModMenu.csproj</ModMenuProject>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration.Contains('UMM'))">
+        <DefineConstants>$(DefineConstants);UMM</DefineConstants>
+    </PropertyGroup>
+
+    <ItemDefinitionGroup>
+        <Reference>
+            <Private>false</Private>
+        </Reference>
+    </ItemDefinitionGroup>
+
+    <ItemGroup Condition="$(Configuration.Contains('ML'))">
+        <Reference Include="MelonLoader" Condition="Exists('$(GamePath)/MelonLoader/net35/MelonLoader.dll')">
+            <HintPath>$(GamePath)/MelonLoader/net35/MelonLoader.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(Configuration.Contains('ML')) and Exists('$(ModMenuProject)')">
+        <ProjectReference Include="$(ModMenuProject)">
+            <SetConfiguration>Configuration=$(Configuration)</SetConfiguration>
+            <SetTargetFramework>TargetFramework=netstandard2.1</SetTargetFramework>
+        </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(Configuration.Contains('ML')) and !Exists('$(ModMenuProject)')">
+        <Reference Include="ModMenu">
+            <HintPath Condition="Exists('$(GamePath)/Plugins/ModMenu.dll')">$(GamePath)/Plugins/ModMenu.dll</HintPath>
+            <HintPath Condition="!Exists('$(GamePath)/Plugins/ModMenu.dll') and Exists('$(GamePath)/Mods/ModMenu.dll')">$(GamePath)/Mods/ModMenu.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(Configuration.Contains('UMM'))">
+        <Reference Include="UnityModManager">
+            <HintPath Condition="Exists('$(UMMPath)/UnityModManager.dll')">$(UMMPath)/UnityModManager.dll</HintPath>
+            <HintPath Condition="!Exists('$(UMMPath)/UnityModManager.dll') and Exists('$(GamePath)/$(GameData)/Managed/UnityModManager/UnityModManager.dll')">$(GamePath)/$(GameData)/Managed/UnityModManager/UnityModManager.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="0Harmony">
+            <HintPath Condition="Exists('$(GamePath)/MelonLoader/net35/0Harmony.dll')">$(GamePath)/MelonLoader/net35/0Harmony.dll</HintPath>
+            <HintPath Condition="!Exists('$(GamePath)/MelonLoader/net35/0Harmony.dll') and Exists('$(UMMPath)/0Harmony.dll')">$(UMMPath)/0Harmony.dll</HintPath>
+            <HintPath Condition="!Exists('$(GamePath)/MelonLoader/net35/0Harmony.dll') and !Exists('$(UMMPath)/0Harmony.dll') and Exists('$(GamePath)/$(GameData)/Managed/UnityModManager/0Harmony.dll')">$(GamePath)/$(GameData)/Managed/UnityModManager/0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="mscorlib"><HintPath>$(GamePath)/$(GameData)/Managed/mscorlib.dll</HintPath></Reference>
+        <Reference Include="Assembly-CSharp"><HintPath>$(GamePath)/$(GameData)/Managed/Assembly-CSharp.dll</HintPath></Reference>
+        <Reference Include="DOTween"><HintPath>$(GamePath)/$(GameData)/Managed/DOTween.dll</HintPath></Reference>
+        <Reference Include="RDTools"><HintPath>$(GamePath)/$(GameData)/Managed/RDTools.dll</HintPath></Reference>
+        <Reference Include="Newtonsoft.Json"><HintPath>$(GamePath)/$(GameData)/Managed/Newtonsoft.Json.dll</HintPath></Reference>
+        <Reference Include="SkyHook.Unity"><HintPath>$(GamePath)/$(GameData)/Managed/SkyHook.Unity.dll</HintPath></Reference>
+        <Reference Include="UnityEngine"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.CoreModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.CoreModule.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.AudioModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.AudioModule.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.ImageConversionModule.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.IMGUIModule.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.InputLegacyModule.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.TextRenderingModule.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.UI"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.UI.dll</HintPath></Reference>
+        <Reference Include="UnityEngine.UIModule"><HintPath>$(GamePath)/$(GameData)/Managed/UnityEngine.UIModule.dll</HintPath></Reference>
+        <Reference Include="Unity.TextMeshPro"><HintPath>$(GamePath)/$(GameData)/Managed/Unity.TextMeshPro.dll</HintPath></Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Assets/**/*.*" />
+        <None Include="Assets/Info.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="Build" Condition="'$(SkipPostBuild)' != 'true'">
+        <PropertyGroup>
+            <JipperRepoRoot>$(MSBuildProjectDirectory)/..</JipperRepoRoot>
+            <BuildOutputDir>$(JipperRepoRoot)/.build/$(Configuration)/$(TargetName)</BuildOutputDir>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <AssetFiles Include="$(MSBuildProjectDirectory)/Assets/**/*.*" />
+        </ItemGroup>
+
+        <MakeDir Directories="$(GamePath)/Mods" Condition="'$(TargetPath)' != '' and $(Configuration.Contains('ML'))" />
+        <Copy Condition="'$(TargetPath)' != '' and $(Configuration.Contains('ML'))" SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)/Mods" SkipUnchangedFiles="true" />
+
+        <MakeDir Directories="$(GamePath)/Mods/JipperResourcePackX" Condition="'$(TargetPath)' != '' and $(Configuration.Contains('UMM'))" />
+        <Copy Condition="'$(TargetPath)' != '' and $(Configuration.Contains('UMM'))" SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)/Mods/JipperResourcePackX" SkipUnchangedFiles="true" />
+        <Copy Condition="$(Configuration.Contains('UMM'))" SourceFiles="$(MSBuildProjectDirectory)/Assets/Info.json" DestinationFolder="$(GamePath)/Mods/JipperResourcePackX" SkipUnchangedFiles="true" />
+
+        <MakeDir Directories="$(GamePath)/UserData/JipperResourcePackX" />
+        <Copy SourceFiles="@(AssetFiles)" DestinationFolder="$(GamePath)/UserData/JipperResourcePackX" SkipUnchangedFiles="true" />
+
+        <MakeDir Directories="$(BuildOutputDir)/Mods" Condition="'$(TargetPath)' != '' and $(Configuration.Contains('ML'))" />
+        <Copy Condition="'$(TargetPath)' != '' and $(Configuration.Contains('ML'))" SourceFiles="$(TargetPath)" DestinationFolder="$(BuildOutputDir)/Mods" SkipUnchangedFiles="true" />
+
+        <MakeDir Directories="$(BuildOutputDir)/Mods/JipperResourcePackX" Condition="'$(TargetPath)' != '' and $(Configuration.Contains('UMM'))" />
+        <Copy Condition="'$(TargetPath)' != '' and $(Configuration.Contains('UMM'))" SourceFiles="$(TargetPath)" DestinationFolder="$(BuildOutputDir)/Mods/JipperResourcePackX" SkipUnchangedFiles="true" />
+        <Copy Condition="$(Configuration.Contains('UMM'))" SourceFiles="$(MSBuildProjectDirectory)/Assets/Info.json" DestinationFolder="$(BuildOutputDir)/Mods/JipperResourcePackX" SkipUnchangedFiles="true" />
+
+        <MakeDir Directories="$(BuildOutputDir)/UserData/JipperResourcePackX" />
+        <Copy SourceFiles="@(AssetFiles)" DestinationFolder="$(BuildOutputDir)/UserData/JipperResourcePackX" SkipUnchangedFiles="true" />
+    </Target>
+
+</Project>

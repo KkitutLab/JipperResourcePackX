@@ -1,61 +1,61 @@
-# JipperResourcePack
-![C#](https://img.shields.io/badge/Lang-Csharp-c9c8e4.svg?&logo=c#)
-![Rider](https://img.shields.io/badge/IDE-Rider-c9c8e4.svg?&logo=rider)
-![Download](https://img.shields.io/github/downloads/Jongye0l/JipperResourcePack/JipperResourcePack.zip)
+# JipperResourcePackX
+
+## WARNING
+### THIS MOD IS A MODIFIED FORK OF THE ORIGINAL [JipperResourcePack](https://github.com/Jongye0l/JipperResourcePack)
+### DO NOT CONTACT OR HARASS THE ORIGINAL AUTHOR UNDER ANY CIRCUMSTANCES
+### DO NOT REPORT BUGS, ASK QUESTIONS, OR COMPLAIN TO THE ORIGINAL AUTHOR (JONGYEOL) REGARDING THIS FORK
+
+We take no responsibility for any issues caused by violating these rules.
+By using this mod, you agree to the terms above.
 
 ---
-### 소개 Information
-* 얼불춤 GUI에 다양한 기능을 표시합니다.
+### Information
+* Displays various features on the A Dance of Fire and Ice GUI.
+* Originally developed by Jongyeol, forked and modified by Kkitut.
 ---
-### 기능 Feature
-* 오버레이
-  * 진행도
-  * 정확도
-  * 절대 정확도
-  * 음악 시간
-  * 맵 시간
+### Features
+* Overlay
+  * Progress
+  * Accuracy
+  * Absolute Accuracy
+  * Music Time
+  * Map Time
   * BPM
-  * 판정
-  * 진행도 바
-  * 콤보
-  * 판정 강도
-  * 최고 기록
-  * 플레이 횟수
-* 키뷰어
-  * 손
-    * 4키
-    * 8키
-    * 12키
-    * 16키
-    * 20키
-    * 10키
-  * 발
-    * 없음
-    * 2키
-    * 4키
-    * 6키
-    * 8키
-    * 16키
-* 리소스 변경
-  * 공 색상 변경
-  * 기본타일 색상 변경
-  * 토끼 모양 변경
-  * 로고 추가
+  * Judgment
+  * Progress Bar
+  * Combo
+  * Judgment Strength
+  * Best Record
+  * Play Count
+* Key Viewer
+  * Hands
+    * 4K
+    * 8K
+    * 12K
+    * 16K
+    * 20K
+    * 10K
+  * Feet
+    * None
+    * 2K
+    * 4K
+    * 6K
+    * 8K
+    * 16K
+* Resource Changer
+  * Ball Color Changer
+  * Default Tile Color Changer
+  * Bunny Shape Changer
+  * Add Logo
 ---
-### 안내 사항 Instructions
-* 이 모드를 사용하려면 [JALib](https://github.com/Jongye0l/JALib/releases)모드가 필요합니다.
----
-### 사용 방법 How to use
-* [이 링크](https://github.com/Jongye0l/JipperResourcePack/releases/download/v1.0.0.0/JipperResourcePack.Installer.exe)에서 다운로드후 실행하시면 자동으로 설치됩니다.
----
-### 크레딧 Credit
-* [개발: Jongyeol](https://www.youtube.com/@Jongyeol)
-* [디자인: Jipper](https://www.youtube.com/@jipper1214)
-* [번역: changhyeon](https://www.youtube.com/@changhyeon7492)
-* [번역: Phrygia](https://www.youtube.com/@sjk04_)
-* [테스트: dofaer](https://www.youtube.com/@%EB%8F%84%ED%8E%98)
-* [테스트: NTure](https://www.youtube.com/@NTure_1253)
-* 참고한 코드
+### Credits
+* [Developer: Jongyeol](https://www.youtube.com/@Jongyeol)
+* [Designer: Jipper](https://www.youtube.com/@jipper1214)
+* [Translator: changhyeon](https://www.youtube.com/@changhyeon7492)
+* [Translator: Phrygia](https://www.youtube.com/@sjk04_)
+* [Tester: dofaer](https://www.youtube.com/@%EB%8F%84%ED%8E%98)
+* [Tester: NTure](https://www.youtube.com/@NTure_1253)
+* Referenced Code
   * [Overlayer](https://github.com/c3nb/Overlayer/tree/2cdf95b13add797f9c274d5766786c24c54adb9f)
   * [ShowBPM](https://github.com/FLOWERs-Modding/ADOFAI_ShowBPM)
   * [ProgressDisplayer2](https://github.com/FLOWERs-Modding/ADOFAI_ProgressDisplayer2)
@@ -66,22 +66,5 @@
   * [AdvancedCombo](https://github.com/Jongye0l/AdvancedCombo)
   * [State](https://github.com/Jongye0l/State)
   * [unity-mod-manager](https://github.com/newman55/unity-mod-manager)
-* 사용한 폰트
+* Fonts Used
   * [Maplestory OTF Bold](https://fontmeme.com/ktype/maplestory-font)
----
-### 개발 환경 Development environment
-* Linux 7.1.8-arch1-3
-* Rider 2026.2.1
-* .NET Framework 4.8.1
-* C# 14
-* A Dance of Fire and Ice 3.4.0(r150, e5b157d)
----
-### 테스트 환경 Test environment
-* Linux 7.1.8-arch1-3
-* A Dance of Fire and Ice 2.9.8(r136, 87412bd)
-* A Dance of Fire and Ice 3.2.0(r145, 2aa2745)
-* A Dance of Fire and Ice 3.3.1(r148, 1b7d115)
-* A Dance of Fire and Ice 3.4.0(r150, e5b157d)
----
-# [Join Jipper's Discord!](https://discord.gg/qTbnPhY7YA)
-# [Join My Discord!](https://discord.jongyeol.kr)

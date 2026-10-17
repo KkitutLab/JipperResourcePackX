@@ -5,6 +5,7 @@
 # Compile File
 bin/
 obj/
+.build/
 
 # Library
 packages/
