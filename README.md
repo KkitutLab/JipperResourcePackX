@@ -13,6 +13,9 @@ By using this mod, you agree to the terms above.
 * Displays various features on the A Dance of Fire and Ice GUI.
 * Originally developed by Jongyeol, forked and modified by Kkitut.
 * JALib is NOT required.
+
+### Dependency
+- Need [ModMenu](https://github.com/modlist-org/ModMenu)
 ---
 ### Features
 * Overlay
