@@ -332,6 +332,8 @@ public static class Main {
         GUILayout.Space(5f);
         Judgement.Instance?.OnGUI();
         GUILayout.Space(5f);
+        TimingScale.Instance?.OnGUI();
+        GUILayout.Space(5f);
         Attempt.Instance?.OnGUI();
     }
 

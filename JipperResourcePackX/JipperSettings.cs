@@ -14,6 +14,7 @@ public class JipperSettings {
     public BpmSettings Bpm = new();
     public ComboSettings Combo = new();
     public JudgementSettings Judgement = new();
+    public TimingScaleSettings TimingScale = new();
     public AttemptSetting Attempt = new();
     public ResourceChangerSetting ResourceChanger = new();
     public KeyViewerSetting KeyViewer = new();

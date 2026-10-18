@@ -22,7 +22,7 @@ public class Combo : Feature {
     }
 
     public override void OnEnable() {
-        if (ComboObject) ComboObject.SetActive(true);
+        if (ComboObject) ComboObject.SetActive(Settings.ShowCombo);
     }
 
     public override void OnDisable() {
@@ -34,8 +34,28 @@ public class Combo : Feature {
         _levelNameTransform = null;
     }
 
+    private static void UpdateLevelNamePosition() {
+        if (!_levelNameTransform) return;
+        if (Settings.ShowCombo) {
+            float size = JipperSettings.Instance.Size;
+            _levelNameTransform.anchoredPosition = new Vector2(0, -20 - 7 * size);
+            _levelNameTransform.localScale = new Vector3(0.5f * size, 0.5f * size);
+            _levelNameTransform.sizeDelta = new Vector2(Math.Abs(_levelNameTransform.sizeDelta.x * 2.5f), _levelNameTransform.sizeDelta.y);
+        } else {
+            _levelNameTransform.localScale = _levelNameOriginalScale;
+            _levelNameTransform.anchoredPosition = _levelNameOriginalPosition;
+            _levelNameTransform.sizeDelta = _levelNameOriginalSizeDelta;
+        }
+    }
+
     public override void OnGUI() {
         SettingGUI settingGUI = Main.SettingGUI;
+        settingGUI.AddSettingToggle(ref Settings.ShowCombo, Localization.Current["combo.showCombo"], () => {
+            if (ComboObject) ComboObject.SetActive(Settings.ShowCombo);
+            UpdateLevelNamePosition();
+            if (Settings.ShowCombo) Overlay.Instance?.UpdateCombo(ComboCount, true);
+        });
+        if (!Settings.ShowCombo) return;
         settingGUI.AddSettingToggle(ref Settings.EnableAutoCombo, Localization.Current["combo.enableAutoCombo"]);
         settingGUI.AddSettingEnum(ref Settings.ComboJudgementTier, Localization.Current["combo.comboJudgementTier"]);
         settingGUI.AddSettingInt(ref Settings.ComboColorMax, 1000, ref _comboColorMaxString, Localization.Current["combo.comboColorMax"], 0);
@@ -45,6 +65,7 @@ public class Combo : Feature {
 
     public static void OnHit(HitMargin hit) {
         try {
+            if (!Settings.ShowCombo) return;
             ComboTier settingsTier = Settings.ComboJudgementTier;
             switch (hit) {
                 case HitMargin.XPerfect:
@@ -83,16 +104,19 @@ public class Combo : Feature {
                 _levelNameOriginalPosition = transform.anchoredPosition;
                 _levelNameOriginalSizeDelta = transform.sizeDelta;
             }
-            float size = JipperSettings.Instance.Size;
-            transform.anchoredPosition = new Vector2(0, -20 - 7 * size);
-            transform.localScale = new Vector3(0.5f * size, 0.5f * size);
-            transform.sizeDelta = new Vector2(Math.Abs(transform.sizeDelta.x * 2.5f), transform.sizeDelta.y);
-            if (___txtLevelName.text != null) ___txtLevelName.text = ___txtLevelName.text.Replace('\n', ' ');
+            if (Settings.ShowCombo) {
+                float size = JipperSettings.Instance.Size;
+                transform.anchoredPosition = new Vector2(0, -20 - 7 * size);
+                transform.localScale = new Vector3(0.5f * size, 0.5f * size);
+                transform.sizeDelta = new Vector2(Math.Abs(transform.sizeDelta.x * 2.5f), transform.sizeDelta.y);
+                if (___txtLevelName.text != null) ___txtLevelName.text = ___txtLevelName.text.Replace('\n', ' ');
+            }
         } catch { }
     }
 }
 
 public class ComboSettings {
+    public bool ShowCombo = true;
     public bool EnableAutoCombo = true;
     public ComboTier ComboJudgementTier = ComboTier.Green;
     public int ComboColorMax = 1000;

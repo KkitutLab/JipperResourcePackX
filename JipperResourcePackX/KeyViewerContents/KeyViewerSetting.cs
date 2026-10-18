@@ -6,6 +6,7 @@ using UnityEngine;
 namespace JipperResourcePackX.KeyViewerContents;
 
 public class KeyViewerSetting {
+    public bool ShowKeyViewer = true;
     public KeyviewerStyle KeyViewerStyle = KeyviewerStyle.Key16;
     public FootKeyviewerStyle FootKeyViewerStyle = FootKeyviewerStyle.Key4;
 

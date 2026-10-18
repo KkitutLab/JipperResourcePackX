@@ -398,7 +398,7 @@ public class Overlay {
     }
 
     public void UpdateJudgement(int index = -1) {
-        if(!GameObject.activeSelf) return;
+        if(!GameObject.activeSelf || !Judgement.Settings.ShowJudgement) return;
         OverlayTextManager.UpdateJudgement(this, index);
     }
     
@@ -584,7 +584,7 @@ public class Overlay {
     }
 
     public void UpdateCombo(int combo, bool bump) {
-        if(!GameObject.activeSelf) return;
+        if(!GameObject.activeSelf || !Combo.Settings.ShowCombo) return;
         ComboText.SetCharArray(Main.SharedBuffer, 0, WriteNumber(Main.SharedBuffer, 0, combo));
         ComboText.color = UpdateComboColor(combo);
         if(bump) {
@@ -626,7 +626,7 @@ public class Overlay {
 
     public virtual void UpdateBpm() {
         try {
-            if(!GameObject.activeSelf) return;
+            if(!GameObject.activeSelf || !Bpm.Settings.ShowBpm) return;
             scrFloor floor = scrController.instance?.currFloor ?? scrController.instance?.firstFloor;
             scrConductor conductor = scrConductor.instance;
             if (conductor?.song == null) return;
@@ -691,7 +691,7 @@ public class Overlay {
 
     public void UpdateTimingScale() {
         try {
-            if(!GameObject.activeSelf) return;
+            if(!GameObject.activeSelf || !TimingScale.Settings.ShowTimingScale) return;
             var currFloor = scrController.instance?.currFloor;
             if (currFloor == null) return;
             char[] buffer = Main.SharedBuffer;
@@ -761,11 +761,36 @@ public class Overlay {
             IsDeath = false;
             
             if(Status.Instance.Enabled) SetupLocationMain();
-            if(Judgement.Instance.Enabled) UpdateJudgement();
-            if(Combo.Instance.Enabled) UpdateCombo(0, false);
-            if(Bpm.Instance.Enabled) UpdateBpm();
-            if(TimingScale.Instance.Enabled) UpdateTimingScale();
-            if(Attempt.Instance.Enabled) UpdateAttempts();
+            if(Judgement.Instance.Enabled && Judgement.Settings.ShowJudgement) {
+                if (Judgement.JudgementObject) Judgement.JudgementObject.SetActive(true);
+                UpdateJudgement();
+            } else if (Judgement.JudgementObject) {
+                Judgement.JudgementObject.SetActive(false);
+            }
+            if(Combo.Instance.Enabled && Combo.Settings.ShowCombo) {
+                if (Combo.ComboObject) Combo.ComboObject.SetActive(true);
+                UpdateCombo(0, false);
+            } else if (Combo.ComboObject) {
+                Combo.ComboObject.SetActive(false);
+            }
+            if(Bpm.Instance.Enabled && Bpm.Settings.ShowBpm) {
+                if (Bpm.BpmObject) Bpm.BpmObject.SetActive(true);
+                UpdateBpm();
+            } else if (Bpm.BpmObject) {
+                Bpm.BpmObject.SetActive(false);
+            }
+            if(TimingScale.Instance.Enabled && TimingScale.Settings.ShowTimingScale) {
+                if (TimingScale.TimingScaleObject) TimingScale.TimingScaleObject.SetActive(true);
+                UpdateTimingScale();
+            } else if (TimingScale.TimingScaleObject) {
+                TimingScale.TimingScaleObject.SetActive(false);
+            }
+            if(Attempt.Instance.Enabled && (Attempt.Settings.ShowAttempt || Attempt.Settings.ShowFullAttempt)) {
+                if (Attempt.AttemptObject) Attempt.AttemptObject.SetActive(true);
+                UpdateAttempts();
+            } else if (Attempt.AttemptObject) {
+                Attempt.AttemptObject.SetActive(false);
+            }
             Combo.ComboCount = 0;
         } catch (Exception ex) {
             ModLogger.Error($"[Overlay/Show] {ex.Message}");

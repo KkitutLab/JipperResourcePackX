@@ -100,6 +100,7 @@ public partial class KeyViewer : Feature {
         RebuildKeyBinding();
         StartEventListener();
         UpdateKeyLimit();
+        if (KeyViewerObject) KeyViewerObject.SetActive(Settings.ShowKeyViewer);
     }
 
     public override void OnDisable() {
@@ -119,6 +120,10 @@ public partial class KeyViewer : Feature {
         KeyViewerSetting settings = Settings;
         SettingGUI settingGUI = Main.SettingGUI;
         Localization localization = Localization.Current;
+        settingGUI.AddSettingToggle(ref settings.ShowKeyViewer, localization["keyViewer.showKeyViewer"], () => {
+            if (KeyViewerObject) KeyViewerObject.SetActive(settings.ShowKeyViewer);
+        });
+        if (!settings.ShowKeyViewer) return;
         settingGUI.AddSettingToggle(ref _keyShare, Localization.Get("keyViewer.keyShare"));
         GUILayout.BeginHorizontal();
         settingGUI.AddSettingSliderFloat(ref settings.YLocation, 200, ref _yLocationString, localization["keyViewer.yLocation"], 0, _currentKeyMaxY, UpdateYLocation);

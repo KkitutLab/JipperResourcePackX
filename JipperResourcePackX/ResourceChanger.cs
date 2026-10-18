@@ -55,6 +55,7 @@ public class ResourceChanger : Feature {
         if (Settings.ChangeRabbit) LoadRabbit();
         if (Settings.ChangeBallColor) LoadPlanet();
         if (Settings.ChangeTileColor) LoadTileColor();
+        if (Settings.AddLogo) LoadLogo();
     }
 
     public override void OnDisable() {
@@ -63,6 +64,7 @@ public class ResourceChanger : Feature {
                 if (Settings.ChangeRabbit) UnloadRabbit();
                 if (Settings.ChangeBallColor) UnloadPlanet();
                 if (Settings.ChangeTileColor) UnloadTileColor();
+                if (Settings.AddLogo) UnloadLogo();
             }
         } catch (Exception e) {
             ModLogger.Error($"[ResourceChanger] Failed to disable: {e.Message}");
@@ -72,6 +74,10 @@ public class ResourceChanger : Feature {
     public override void OnGUI() {
         SettingGUI settingGUI = Main.SettingGUI;
         Localization localization = Localization.Current;
+        settingGUI.AddSettingToggle(ref Settings.AddLogo, localization["resourceChanger.addLogo"], () => {
+            if (Settings.AddLogo) LoadLogo();
+            else UnloadLogo();
+        });
         settingGUI.AddSettingToggle(ref Settings.ChangeRabbit, localization["resourceChanger.changeRabbit"], () => {
             if (Settings.ChangeRabbit) LoadRabbit();
             else UnloadRabbit();
@@ -84,6 +90,20 @@ public class ResourceChanger : Feature {
             if (Settings.ChangeTileColor) LoadTileColor();
             else UnloadTileColor();
         });
+    }
+
+    private static void LoadLogo() {
+        try {
+            scrLogoText logoText = SafeAccess.FindAnyObjectByType<scrLogoText>();
+            if (logoText) OnLogoTextAwake(logoText);
+        } catch { }
+    }
+
+    private static void UnloadLogo() {
+        try {
+            var logo = GameObject.Find("JipperResourcepack Logo");
+            if (logo != null) Object.Destroy(logo);
+        } catch { }
     }
 
     private static void LoadRabbit() {
@@ -233,27 +253,41 @@ public class ResourceChanger : Feature {
             if (__instance == null || (object)__instance.gameObject == null) return;
             RectTransform rectTransform = __instance.gameObject.GetComponent<RectTransform>();
             if (rectTransform != null) {
-                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, 0.75f);
                 if (Settings.ChangeBallColor && !SafeAccess.IsCoopMode()) {
                     __instance.ColorLogoSafe(PlanetColor, true);
                     __instance.ColorLogoSafe(PlanetColor, false);
                 }
-                Transform hitSpace = rectTransform.parent?.parent?.Find("Hit Space");
-                if (hitSpace != null && !hitSpace.Find("JipperResourcepack Logo")) {
-                    var edu = hitSpace.Find("Education Edition");
+                if (!Settings.AddLogo) return;
+                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, 0.75f);
+                Transform container = rectTransform.parent?.parent?.Find("Hit Space")
+                    ?? GameObject.Find("Hit Space")?.transform
+                    ?? rectTransform.parent;
+                if (container != null && !container.Find("JipperResourcepack Logo")) {
+                    var edu = container.Find("Education Edition");
+                    GameObject gameObject;
                     if (edu != null) {
-                        GameObject gameObject = Object.Instantiate(edu.gameObject, hitSpace);
-                        gameObject.SetActive(true);
-                        gameObject.name = "JipperResourcepack Logo";
-                        Text text = gameObject.GetComponent<Text>();
-                        if (text != null) {
-                            text.text = ResourcePackName;
-                            text.color = TitleColor;
-                            text.fontSize = 100;
-                        }
-                        var rt = gameObject.GetComponent<RectTransform>();
-                        if (rt != null) rt.anchoredPosition = new Vector2(-50, 330);
+                        gameObject = Object.Instantiate(edu.gameObject, container);
+                    } else {
+                        gameObject = new GameObject("JipperResourcepack Logo");
+                        gameObject.transform.SetParent(container, false);
+                        var rtNew = gameObject.AddComponent<RectTransform>();
+                        rtNew.anchorMin = new Vector2(0.5f, 0.5f);
+                        rtNew.anchorMax = new Vector2(0.5f, 0.5f);
+                        rtNew.pivot = new Vector2(0.5f, 0.5f);
+                        var textNew = gameObject.AddComponent<Text>();
+                        textNew.font = RDString.fontData.font ?? Resources.GetBuiltinResource<Font>("Arial.ttf");
+                        textNew.alignment = TextAnchor.MiddleCenter;
                     }
+                    gameObject.SetActive(true);
+                    gameObject.name = "JipperResourcepack Logo";
+                    Text text = gameObject.GetComponent<Text>();
+                    if (text != null) {
+                        text.text = ResourcePackName;
+                        text.color = TitleColor;
+                        text.fontSize = 100;
+                    }
+                    var rt = gameObject.GetComponent<RectTransform>();
+                    if (rt != null) rt.anchoredPosition = new Vector2(-50, 330);
                 }
             }
         } catch (Exception ex) {
@@ -263,6 +297,7 @@ public class ResourceChanger : Feature {
 }
 
 public class ResourceChangerSetting {
+    public bool AddLogo = true;
     public bool ChangeRabbit = true;
     public bool ChangeBallColor = true;
     public bool ChangeTileColor = true;

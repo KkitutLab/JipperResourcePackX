@@ -12,15 +12,21 @@ public class Attempt : Feature {
     }
 
     public override void OnEnable() {
-        if (AttemptObject) AttemptObject.SetActive(true);
+        if (AttemptObject) AttemptObject.SetActive(Settings.ShowAttempt || Settings.ShowFullAttempt);
         if (scrLevelMaker.instance) Overlay.Instance?.UpdateAttempts();
     }
 
     public override void OnGUI() {
         SettingGUI settingGUI = Main.SettingGUI;
         Localization localization = Localization.Current;
-        settingGUI.AddSettingToggle(ref Settings.ShowAttempt, localization["attempt.showAttempt"]);
-        settingGUI.AddSettingToggle(ref Settings.ShowFullAttempt, localization["attempt.showFullAttempt"]);
+        settingGUI.AddSettingToggle(ref Settings.ShowAttempt, localization["attempt.showAttempt"], () => {
+            if (AttemptObject) AttemptObject.SetActive(Settings.ShowAttempt || Settings.ShowFullAttempt);
+            Overlay.Instance?.UpdateAttempts();
+        });
+        settingGUI.AddSettingToggle(ref Settings.ShowFullAttempt, localization["attempt.showFullAttempt"], () => {
+            if (AttemptObject) AttemptObject.SetActive(Settings.ShowAttempt || Settings.ShowFullAttempt);
+            Overlay.Instance?.UpdateAttempts();
+        });
     }
 
     public override void OnDisable() {
