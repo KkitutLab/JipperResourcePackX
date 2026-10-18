@@ -63,7 +63,15 @@ public static class Main {
     public static bool InitializeML() {
         try {
             ModPath = Path.Combine("UserData", "JipperResourcePackX");
-            if (!Initialize()) return false;
+
+            bool shouldEnable = true;
+            try {
+                shouldEnable = ModMenu.ModMenuApi.IsModEnabled("JipperResourcePackX");
+            } catch {
+                shouldEnable = true;
+            }
+
+            if (shouldEnable && !Initialize()) return false;
 
             try {
                 ModMenu.ModMenuApi.Register(new ModMenu.ModEntry {
@@ -71,7 +79,7 @@ public static class Main {
                     DisplayName = "Jipper Resource Pack X",
                     Version = "1.6.0.1",
                     Author = "Jongyeol, Kkitut",
-                    Enabled = Enabled,
+                    Enabled = shouldEnable,
                     OnToggle = (val) => OnToggle(val),
                     OnGUI = () => DrawGUI(),
                     OnSaveGUI = () => Settings.Save()
